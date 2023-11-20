@@ -8,22 +8,29 @@ CC = gcc
 CFLAGS = -g -Wall
 LDFLAGS = -lpthread
 
-all: proxy
+all: echoclient echoserveri
 
 csapp.o: csapp.c csapp.h
-	$(CC) $(CFLAGS) -c csapp.c
+    $(CC) $(CFLAGS) -c csapp.c
 
-proxy.o: proxy.c csapp.h
-	$(CC) $(CFLAGS) -c proxy.c
+echoclient.o: echoclient.c csapp.h
+    $(CC) $(CFLAGS) -c echoclient.c
 
-proxy: proxy.o csapp.o
-	$(CC) $(CFLAGS) proxy.o csapp.o -o proxy $(LDFLAGS)
+echoserveri.o: echoserveri.c csapp.h
+    $(CC) $(CFLAGS) -c echoserveri.c
 
-# Creates a tarball in ../proxylab-handin.tar that you can then
+echoclient: echoclient.o csapp.o
+    $(CC) $(CFLAGS) echoclient.o csapp.o -o echoclient $(LDFLAGS)
+
+echoserveri: echoserveri.o csapp.o
+    $(CC) $(CFLAGS) echoserveri.o csapp.o -o echoserveri $(LDFLAGS)
+
+# Creates a tarball in ../echoclientlab-handin.tar that you can then
 # hand in. DO NOT MODIFY THIS!
+
 handin:
-	(make clean; cd ..; tar cvf $(USER)-proxylab-handin.tar proxylab-handout --exclude tiny --exclude nop-server.py --exclude proxy --exclude driver.sh --exclude port-for-user.pl --exclude free-port.sh --exclude ".*")
+    (make clean; cd ..; tar cvf $(USER)-echoclientlab-handin.tar echoclientlab-handout --exclude tiny --exclude nop-server.py --exclude echoclient --exclude driver.sh --exclude port-for-user.pl --exclude free-port.sh --exclude ".*")
 
 clean:
-	rm -f *~ *.o proxy core *.tar *.zip *.gzip *.bzip *.gz
+    rm -f *~ *.o echoclient echoserveri core *.tar *.zip *.gzip *.bzip *.gz
 
