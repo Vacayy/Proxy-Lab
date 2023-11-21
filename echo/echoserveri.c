@@ -18,11 +18,14 @@ int main(int argc, char **argv)
     }
 
     // 리스닝 파일 디스크립터 열기
-    listenfd = Open_listenfd(argv[1]);
+    listenfd = Open_listenfd(argv[1]); // argv[0] = ./echoserveri | argv[1] = 포트번호
+    printf("listening file descriptor: %d\n", listenfd);
     while (1) {
         // 클라이언트 요청을 처리하기 위한 무한 루프
         clientlen = sizeof(struct sockaddr_storage);
+        printf("연결 요청 대기 중\n");
         connfd = Accept(listenfd, (SA *)&clientaddr, &clientlen);
+        printf("연결 요청 수락, 연결 소켓(connfd) 생성\n");
         Getnameinfo((SA *) &clientaddr, clientlen, client_hostname, MAXLINE,
                     client_port, MAXLINE, 0);
         printf("Connectd to (%s, %s)\n", client_hostname, client_port);

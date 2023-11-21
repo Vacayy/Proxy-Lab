@@ -962,13 +962,16 @@ int open_clientfd(char *hostname, char *port) {
     }
   
     /* Walk the list for one that we can successfully connect to */
+    printf("ai(address info) struct 순회 시작 \n", p);
     for (p = listp; p; p = p->ai_next) {
         /* Create a socket descriptor */
         if ((clientfd = socket(p->ai_family, p->ai_socktype, p->ai_protocol)) < 0) 
             continue; /* Socket failed, try the next */
 
         /* Connect to the server */
+        printf("%d 연결 시도 \n", p);
         if (connect(clientfd, p->ai_addr, p->ai_addrlen) != -1) 
+            printf("<<< 연결 성공! >>> \n", p);
             break; /* Success */
         if (close(clientfd) < 0) { /* Connect failed, try another */  //line:netp:openclientfd:closefd
             fprintf(stderr, "open_clientfd: close failed: %s\n", strerror(errno));

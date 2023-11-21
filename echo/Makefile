@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -g -O1 -Wall
 LDLIBS = -lpthread
 
-all: echoclient echoserveri 
+all: echoclient echoserveri
 
 echoclient: echoclient.c csapp.c
 	$(CC) $(CFLAGS) -o echoclient echoclient.c csapp.c $(LDLIBS)
